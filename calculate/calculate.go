@@ -63,5 +63,13 @@ func Operate() {
             continue
         }
         ifPrime, divisor1, divisor2, err :=  Calculate(aAsInt)
-        for
+        for ifPrime != true {
+            if ifPrime != true {
+                isNotPrime(a, divisor1, divisor2)
+                a = strconv.Atoi(divisor1)
+                ifPrime, divisor1, divisor2, err = Calculate(a)
+            } else {
+                isPrimePrint(a)
+            }
+        }
 }
