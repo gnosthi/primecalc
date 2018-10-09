@@ -2,7 +2,9 @@ package calculate
 
 import (
     "fmt"
+    "errors"
     "strconv"
+    "os"
 )
 
 
@@ -62,14 +64,18 @@ func Operate() {
             checkIfNumber(a)
             continue
         }
-        ifPrime, divisor1, divisor2, err :=  Calculate(aAsInt)
+        ifPrime, divisor1, divisor2, err := Calculate(aAsInt)
         for ifPrime != true {
             if ifPrime != true {
                 isNotPrime(a, divisor1, divisor2)
-                a = strconv.Atoi(divisor1)
-                ifPrime, divisor1, divisor2, err = Calculate(a)
+                a = strconv.Itoa(divisor1)
+                ifPrime, divisor1, divisor2, err = Calculate(divisor1)
             } else {
                 isPrimePrint(a)
+                fmt.Println("---------------------------------------")
             }
         }
+        isPrimePrint(a)
+        fmt.Println("------------------------------------------------")
+    }
 }
