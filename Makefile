@@ -36,7 +36,7 @@ clean:
 	@rm -rf ./primecalc-*
 
 $(PRIMECALC_OUTPUT): $(GOFILES_BUILD)
-    @echo -n ">> BUILD, version = $(PRIMECALC_VERSION)/$(PRIMECALC_REVISION), output = $@"
+    @echo -n ">> BUILD, version = $(PRIMECALC_VERSION)/$(PRIMECALC_REVISION), output = $@)"
     @$(GO) build -o $@ $(BUILDFLAGS)
     @printf '%s\n' '$(OK)'
 
