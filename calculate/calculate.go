@@ -53,7 +53,8 @@ func Calculate(n int) (isPrime bool, divisor1, divisor2 int, err error) {
             return false, i, divisor2, nil
         }
     }
-    err =  errors.New("An error occurred finding the prime. No condition met.")
+    // This should never happen.
+    err =  errors.New("an error occurred finding the prime. No condition met")
     return false, 0, 0, err
 }
 
@@ -70,9 +71,6 @@ func Operate() {
                 isNotPrime(a, divisor1, divisor2)
                 a = strconv.Itoa(divisor1)
                 ifPrime, divisor1, divisor2, err = Calculate(divisor1)
-            } else {
-                isPrimePrint(a)
-                fmt.Println("---------------------------------------")
             }
         }
         isPrimePrint(a)

@@ -1,9 +1,12 @@
 GOFILES_BUILD           := $(shell find . -type f -name '*.go' -not -name '*_test.go')
+PKGS                    := $(shell go list ./... | grep -v /tests)
+GOFILES_NOVENDOR        := $(shell find . -name vendor -prune -o -type f -name '*.go' -print)
 DATE                    := $(shell date -u -d "@$(SOURCE_DATE_EPOCH)" '+%FT%T%z' 2>/dev/null || date -u '+%FT%T%z')
 PRIMECALC_VERSION       ?= $(shell cat VERSION)
 PRIMECALC_REVISION      := $(shell git rev-parse --short=8 HEAD)
 PRIMECALC_OUTPUT        ?= primecalc
 BUILDFLAGS              := -ldflags="-s -w -X main.version=$(PRIMECALC_VERSION) -X main.commit=$(PRIMECALC_REVISION) -X main.date=$(DATE)" -gcflags="-trimpath=$(GOPATH)" -asmflags="-trimpath=$(GOPATH)" -buildmode=pie
+TESTFLAGS               ?=
 PWD                     := $(shell pwd)
 PREFIX                  ?= $(GOPATH)
 BINDIR                  ?= $(PREFIX)/bin
@@ -33,7 +36,12 @@ sysinfo:
 clean:
 	@echo -n ">> CLEAN"
 	@$(GO) clean -i ./
+	@rm -f ./coverage-all.out
+	@rm -f ./coverage-all.html
+	@rm -f ./coverage.out
+	@rm -rf ./dist/*
 	@rm -rf ./primecalc-*
+	@printf '%s\n' '$(OK)'
 
 $(PRIMECALC_OUTPUT): $(GOFILES_BUILD)
 	@echo -n ">> BUILD, version = $(PRIMECALC_VERSION)/$(PRIMECALC_REVISION), output = $@)"
@@ -45,6 +53,15 @@ install: all
 	@install -m 0755 -d $(DESTDIR)$(BINDIR)
 	@install -m 0755 $(PRIMECALC_OUTPUT) $(DESTDIR)$(BINDIR)/PRIMECALC
 	@printf '%s\n' '$(OK)'
+
+fulltest: $(PRIMECALC_OUTPUT)
+	@echo ">> TEST, \"full-mode\": race detector on"
+	@echo "mode: atomic" > coverage-all.out
+	@$(foreach pkg, $(PKG),\
+		echo -n "     ";\
+		go test -run '(Test|Example)' $(BUILDFLAGS) $(TESTFLAGS) -race -coverprofile=coverage.out -covermode=atomic $(pkg) || exit 1;\
+		tail -n +2 coverage.out >> coverage-all.out;)
+	@$(GO) tool cover -html=coverage-all.out -o coverage-all.html
 
 test: $(PRIMECALC_OUTPUT)
 	@echo ">> TEST, \"fast-mode\": race detector off"
