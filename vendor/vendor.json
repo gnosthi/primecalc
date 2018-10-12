@@ -1,6 +1,25 @@
 {
 	"comment": "",
 	"ignore": "test",
-	"package": [],
+	"package": [
+		{
+			"checksumSHA1": "HKZSbSPTlF3Vlqcq9RTz64/dYoA=",
+			"path": "github.com/gnosthi/primecalc",
+			"revision": "1e399b5c01e73b806ca6c3b2e0176a8353b975f8",
+			"revisionTime": "2018-10-09T04:08:48Z"
+		},
+		{
+			"checksumSHA1": "fNqFHSrU6Maa+zveSQfqoKSbwks=",
+			"path": "github.com/gnosthi/primecalc/calculate",
+			"revision": "1e399b5c01e73b806ca6c3b2e0176a8353b975f8",
+			"revisionTime": "2018-10-09T04:08:48Z"
+		},
+		{
+			"checksumSHA1": "lluKEsHsWNOn4uQ8cHosOMqGKKY=",
+			"path": "github.com/gnosthi/primecalc/helpers",
+			"revision": "1e399b5c01e73b806ca6c3b2e0176a8353b975f8",
+			"revisionTime": "2018-10-09T04:08:48Z"
+		}
+	],
 	"rootPath": "github.com/gnosthi/primecalc"
 }

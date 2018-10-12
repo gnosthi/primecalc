@@ -1,2 +1,5 @@
 primecalc
 .idea
+dist/
+coverage-all.out
+coverage-all.html
