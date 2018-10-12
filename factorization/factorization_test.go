@@ -20,3 +20,19 @@ func TestPrimeFactors(t *testing.T) {
 	}
 }
 
+func TestFactorMultiplication(t *testing.T) {
+	divisor := "23"
+	factors := []string{"2","2","31"}
+	sum := "2852"
+
+	line := FactorMultiplication(divisor,factors,sum)
+	fmt.Println(line)
+
+	if line == "" {
+		t.Errorf("Factorization stringing failed")
+	}
+
+	if line != "23 * 2 * 2 * 31 = 2852" {
+		t.Errorf("Factorization sequence not met")
+	}
+}

@@ -54,12 +54,16 @@ func Calculate(n int) (isPrime bool, divisor1, divisor2 int, err error) {
         }
     }
     // This should never happen.
-    err =  errors.New("An error occurred finding the prime. No condition met.")
+    err =  errors.New("an error occurred finding the prime. No condition met")
     return false, 0, 0, err
 }
 
+// TODO Issue running factorization in Operate(), No output seems to occur. - 10/11/2018 (Commented out relevant code for now)
+
 func Operate() {
+    // var factor []string
     for _, a := range os.Args[1:] {
+        //copyOfA := a
         aAsInt, err := strconv.Atoi(a)
         if err != nil {
             checkIfNumber(a)
@@ -67,12 +71,16 @@ func Operate() {
         }
         ifPrime, divisor1, divisor2, err := Calculate(aAsInt)
         for ifPrime != true {
+            /* d2ToA := strconv.Itoa(divisor2)
+        	factor = append(factor, d2ToA) */
             if ifPrime != true {
                 isNotPrime(a, divisor1, divisor2)
                 a = strconv.Itoa(divisor1)
                 ifPrime, divisor1, divisor2, err = Calculate(divisor1)
             }
         }
+        // text := factorization.FactorMultiplication(a,factor,copyOfA)
+        // fmt.Printf("%s\n", text)
         isPrimePrint(a)
         fmt.Println("------------------------------------------------")
     }

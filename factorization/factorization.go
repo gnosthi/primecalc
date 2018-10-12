@@ -1,5 +1,7 @@
 package factorization
 
+import "fmt"
+
 func PrimeFactors(n int) (pfs []int) {
     for n%2 == 0 {
         pfs = append(pfs, 2)
@@ -20,4 +22,21 @@ func PrimeFactors(n int) (pfs []int) {
         pfs = append(pfs,n)
     }
     return
+}
+
+func FactorMultiplication(primeDivisor string, factors []string, sum string) string {
+    var factorial string
+    if len(factors) > 1 {
+        factorial = primeDivisor + " * "
+        for _,i := range factors {
+            if i == factors[len(factors)-1] {
+                factorial = factorial + i + " = " + sum
+                break
+            }
+            factorial = factorial + i + " * "
+        }
+        fmt.Println(factorial)
+        return factorial
+    }
+    return ""
 }
