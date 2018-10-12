@@ -15,6 +15,24 @@ var calculatetest = []struct {
 }{
 	{"-1", false, 0, 0, nil},
 	{"1", true, 0, 0, nil},
+	{"2", true, 0, 0, nil},
+	{"3", true, 0, 0, nil},
+	{"4", false, 2, 2, nil},
+	{"5", true, 0, 0, nil},
+	{"6", false,3, 2, nil},
+	{"7", true, 0, 0, nil},
+	{"8", false, 4, 2, nil},
+	{"9", false,3,3,nil},
+	{"10", false,5,2,nil},
+	{"11", true,0,0,nil},
+	{"12",false,6,2,nil},
+	{"13",true,0,0,nil},
+	{"14",false,7,2,nil},
+	{"15",false,5,3,nil},
+	{"16",false,8,2,nil},
+	{"17",true,0,0,nil},
+	{"18",false,9,2,nil},
+	{"19",true,0,0,nil},
 	{"31", true, 0, 0, nil},
 	{"24", false, 12, 2, nil},
 	{"111", false, 37, 3, nil},
@@ -27,6 +45,11 @@ var divisortest = []struct {
 	{"1", 0},
 	{"10", 5},
 	{"20", 10},
+	{"7",0},
+	{"21",7},
+	{"33",11},
+	{"93",31},
+	{"111",37},
 }
 
 var nantest = []struct{
@@ -126,11 +149,11 @@ func BenchMarkPrimePrinting(b *testing.B) {
 }
 
 func TestOperate(t *testing.T) {
-	os.Args = []string{"1", "111", "93", "abc", "31", "101"}
+	os.Args = []string{"1", "111", "93", "abc", "31", "101","891","777","91","118","20394","19283","1928737","123","31","666"}
 	Operate()
 }
 
 func BenchmarkOperate(b *testing.B) {
-	os.Args = []string{"1", "111", "93", "abc", "31", "101"}
+	os.Args = []string{"1", "111", "93", "abc", "31", "101","891","777","91","118","20394","19283","1928737","123","31","666"}
 	Operate()
 }
