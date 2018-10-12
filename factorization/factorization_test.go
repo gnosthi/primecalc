@@ -4,7 +4,18 @@ import (
 	"fmt"
     "testing"
 )
+var testfactors = []struct{
+	divisor string
+	factors []string
+	sum string
+}{
+	{"23",[]string{"2","2","31"},"2852"},
+	{"31",[]string{"3","3","31"}, "8649"},
+	{"11", []string{"2","11"}, "242"},
+	{"1607",[]string{"3","2","2"}, "19284"},
+	{"2", []string{"2","2","2","2","2","2","2","2","2"}, "1024"},
 
+}
 func TestPrimeFactors(t *testing.T) {
 	if fmt.Sprintf("%v", PrimeFactors(23)) != `[23]` {
 		t.Error(23)
@@ -21,18 +32,31 @@ func TestPrimeFactors(t *testing.T) {
 }
 
 func TestFactorMultiplication(t *testing.T) {
-	divisor := "23"
-	factors := []string{"2","2","31"}
-	sum := "2852"
-
-	line := FactorMultiplication(divisor,factors,sum)
-	fmt.Println(line)
-
-	if line == "" {
-		t.Errorf("Factorization stringing failed")
+	// Test string construction
+	for _, tt := range testfactors {
+		t.Run(tt.divisor, func(t *testing.T) {
+			value := FactorMultiplication(tt.divisor,tt.factors,tt.sum)
+			if value == "" {
+				t.Errorf("error stringing factors, no string returned")
+			}
+			expected := tt.divisor + " * "
+			for _,i := range tt.factors {
+				if i == tt.factors[len(tt.factors)-1] {
+					expected = expected + i + " = " + tt.sum
+					break
+				}
+				expected = expected + i + " * "
+			}
+			if value != expected {
+				t.Errorf("wanted %s, got %s", expected, value)
+			}
+		})
 	}
-
-	if line != "23 * 2 * 2 * 31 = 2852" {
-		t.Errorf("Factorization sequence not met")
+	// Test empty string conditions
+	for i := 0; i < len(testfactors); i++ {
+		value := FactorMultiplication("2",[]string{""},"2")
+		if value != "" {
+			t.Errorf("expected empty string, got %s", value)
+		}
 	}
 }

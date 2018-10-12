@@ -117,6 +117,18 @@ func TestCheckIfNumber(t *testing.T) {
 			}
 		})
 	}
+	for i := 0; i < 1000; i ++ {
+		isNum := checkIfNumber("a")
+		if isNum == true {
+			t.Errorf("Error: Expected false, got %t", isNum )
+		}
+	}
+	for i := 0; i < 1000; i++ {
+		isNum := checkIfNumber(strconv.Itoa(i))
+		if isNum != true {
+			t.Errorf("Error: Expected true, got %t", isNum)
+		}
+	}
 }
 
 func BenchmarkCheckIfNumber(b *testing.B) {
@@ -128,6 +140,18 @@ func BenchmarkCheckIfNumber(b *testing.B) {
 			}
 		})
 	}
+	for i := 0; i < b.N; i++ {
+		isNum := checkIfNumber("a")
+		if isNum == true {
+			b.Errorf("Error: Expected false, got %t", isNum)
+		}
+	}
+	for i := 0; i < b.N; i++ {
+		isNum := checkIfNumber(strconv.Itoa(i))
+		if isNum != true {
+			b.Errorf("Error: Expected true, got %t", isNum)
+		}
+	}
 }
 
 func TestIsPrimePrint(t *testing.T) {
@@ -137,23 +161,63 @@ func TestIsPrimePrint(t *testing.T) {
 			isNotPrime(tt.number, tt.divisor, tt.divisor2)
 		})
 	}
+	for i := 0; i < 1000; i++ {
+		isPrime, divisor, divisor2, err := Calculate(i)
+		if err != nil {
+			t.Errorf("Error Occurred")
+		}
+		if isPrime == true {
+			isPrimePrint(strconv.Itoa(i))
+		}
+		if isPrime == false {
+			isNotPrime(strconv.Itoa(i), divisor, divisor2)
+		}
+	}
 }
 
-func BenchMarkPrimePrinting(b *testing.B) {
+func BenchMarkIsPrimePrint(b *testing.B) {
 	for _,tt := range calculatetest {
 		b.Run(tt.number, func(b *testing.B){
 			isPrimePrint(tt.number)
 			isNotPrime(tt.number, tt.divisor, tt.divisor2)
 		})
 	}
+	for i := 0; i < b.N; i++ {
+		isPrime, divisor, divisor2, err := Calculate(i)
+		if err != nil {
+			b.Errorf("Error Occured")
+		}
+		if isPrime == true {
+			isPrimePrint(strconv.Itoa(i))
+		}
+		if isPrime != true {
+			isNotPrime(strconv.Itoa(i),divisor,divisor2)
+		}
+	}
 }
 
 func TestOperate(t *testing.T) {
 	os.Args = []string{"1", "111", "93", "abc", "31", "101","891","777","91","118","20394","19283","1928737","123","31","666"}
 	Operate()
+	for i := 0; i < 1000; i++ {
+		os.Args = []string{strconv.Itoa(i)}
+		Operate()
+	}
+	for i := 0; i < 1000; i ++ {
+		os.Args = []string{"a"}
+		Operate()
+	}
 }
 
 func BenchmarkOperate(b *testing.B) {
 	os.Args = []string{"1", "111", "93", "abc", "31", "101","891","777","91","118","20394","19283","1928737","123","31","666"}
 	Operate()
+	for i := 0; i < b.N; i++ {
+		os.Args = []string{strconv.Itoa(i)}
+		Operate()
+	}
+	for i := 0; i < b.N; i++ {
+		os.Args = []string{"a"}
+		Operate()
+	}
 }
