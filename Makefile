@@ -51,7 +51,7 @@ $(PRIMECALC_OUTPUT): $(GOFILES_BUILD)
 install: all
 	@echo -n ">> INSTALL, version = $(PRIMECALC_VERSION)"
 	@install -m 0755 -d $(DESTDIR)$(BINDIR)
-	@install -m 0755 $(PRIMECALC_OUTPUT) $(DESTDIR)$(BINDIR)/PRIMECALC
+	@install -m 0755 $(PRIMECALC_OUTPUT) $(DESTDIR)$(BINDIR)/$(PRIMECALC_OUTPUT)
 	@printf '%s\n' '$(OK)'
 
 fulltest: $(PRIMECALC_OUTPUT)
