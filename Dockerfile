@@ -11,4 +11,4 @@ FROM alpine:3.7
 
 COPY --from=0 /go/src/github.com/gnosthi/primecalc/primecalc /usr/bin
 
-ENTRYPOINT [ "/usr/bin/primecacl"]
+ENTRYPOINT [ "/usr/bin/primecalc"]
