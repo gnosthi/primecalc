@@ -1,4 +1,4 @@
-PrimeCalc v0.3
+PrimeCalc v0.4
 ==============
 [![Build Status](https://travis-ci.com/gnosthi/primecalc.svg?branch=master)](https://travis-ci.com/gnosthi/primecalc)|[![codecov](https://codecov.io/gh/gnosthi/primecalc/branch/master/graph/badge.svg)](https://codecov.io/gh/gnosthi/primecalc)
 

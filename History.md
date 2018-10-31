@@ -1,4 +1,15 @@
 
+v.0.4 / 2018-10-30
+==================
+
+  * Updated versioning
+  * further work on circleci integration
+
+v.0.4 / 2018-10-29
+==================
+
+  * Updated versioning
+
 v.0.3 / 2018-10-26
 ==================
 
