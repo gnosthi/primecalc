@@ -1,4 +1,13 @@
 
+v.0.4-4 / 2018-10-30
+==================
+
+  * Updated readme
+  * add make to circleci
+  * Resolved issue with yaml in circleci
+  * working out bugs for circleci integration
+  * Updated versioning
+
 v.0.4 / 2018-10-30
 ==================
 
