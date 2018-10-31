@@ -4,11 +4,10 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.09
+      - image: circleci/golang:1.11.1
 
-    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    working_directory: /go/src/github.com/gnosthi/primecalc
     steps:
       - checkout
-
-    - run: go get -v -t -d ./...
-    - run: make test
+      - run: go get -v -t -d ./...
+      - run: make test
