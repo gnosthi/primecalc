@@ -9,8 +9,8 @@ import (
 var calculatetest = []struct {
 	number   string
 	prime    bool
-	divisor  uint64
-	divisor2 uint64
+	divisor  int64
+	divisor2 int64
 	err      error
 }{
 	{"-1", false, 0, 0, nil},
@@ -69,7 +69,7 @@ func TestCalculate(t *testing.T) {
 	for _, tt := range calculatetest {
 		t.Run(tt.number, func(t *testing.T) {
 			n, _ := strconv.Atoi(tt.number)
-			isPrime, divisor, divisor2, err := Calculate(uint64(n))
+			isPrime, divisor, divisor2, err := Calculate(int64(n))
 			if isPrime != tt.prime {
 				t.Errorf("Error: Expected isPrime value of %v got %v", tt.prime, isPrime)
 			}
@@ -90,7 +90,7 @@ func BenchmarkCalculate(b *testing.B) {
 	for _, tt := range calculatetest {
 		b.Run(tt.number, func(b *testing.B) {
 			n, _ := strconv.Atoi(tt.number)
-			isPrime, divisor, divisor2, err := Calculate(uint64(n))
+			isPrime, divisor, divisor2, err := Calculate(int64(n))
 			if isPrime != tt.prime {
 				b.Errorf("Error: Expected isPrime value of %v got %v", tt.prime, isPrime)
 			}
@@ -111,20 +111,23 @@ func BenchmarkCalculate(b *testing.B) {
 func TestCheckIfNumber(t *testing.T) {
 	for _, tt := range nantest {
 		t.Run(tt.in, func(t *testing.T) {
-			isNum := checkIfNumber(tt.in)
+			isNum, _ := checkIfNumber(tt.in)
 			if isNum != tt.out {
 				t.Errorf("Error: Expected checkIfNumber to report %v, got %v instead", tt.out, isNum)
 			}
 		})
 	}
 	for i := 0; i < 1000; i++ {
-		isNum := checkIfNumber("a")
+		isNum, err := checkIfNumber("a")
+		if err != nil {
+			continue
+		}
 		if isNum == true {
 			t.Errorf("Error: Expected false, got %t", isNum)
 		}
 	}
 	for i := 0; i < 1000; i++ {
-		isNum := checkIfNumber(strconv.Itoa(i))
+		isNum, _ := checkIfNumber(strconv.Itoa(i))
 		if isNum != true {
 			t.Errorf("Error: Expected true, got %t", isNum)
 		}
@@ -134,20 +137,23 @@ func TestCheckIfNumber(t *testing.T) {
 func BenchmarkCheckIfNumber(b *testing.B) {
 	for _, tt := range nantest {
 		b.Run(tt.in, func(b *testing.B) {
-			isNum := checkIfNumber(tt.in)
+			isNum, _ := checkIfNumber(tt.in)
 			if isNum != tt.out {
 				b.Errorf("Error: Expected checkIfNumber to report %v, got %v instead", tt.out, isNum)
 			}
 		})
 	}
 	for i := 0; i < b.N; i++ {
-		isNum := checkIfNumber("a")
+		isNum, err := checkIfNumber("a")
+		if err != nil {
+			continue
+		}
 		if isNum == true {
 			b.Errorf("Error: Expected false, got %t", isNum)
 		}
 	}
 	for i := 0; i < b.N; i++ {
-		isNum := checkIfNumber(strconv.Itoa(i))
+		isNum, _ := checkIfNumber(strconv.Itoa(i))
 		if isNum != true {
 			b.Errorf("Error: Expected true, got %t", isNum)
 		}
@@ -162,7 +168,7 @@ func TestIsPrimePrint(t *testing.T) {
 		})
 	}
 	for i := 0; i < 1000; i++ {
-		isPrime, divisor, divisor2, err := Calculate(uint64(i))
+		isPrime, divisor, divisor2, err := Calculate(int64(i))
 		if err != nil {
 			t.Errorf("Error Occurred")
 		}
@@ -183,7 +189,7 @@ func BenchMarkIsPrimePrint(b *testing.B) {
 		})
 	}
 	for i := 0; i < b.N; i++ {
-		isPrime, divisor, divisor2, err := Calculate(uint64(i))
+		isPrime, divisor, divisor2, err := Calculate(int64(i))
 		if err != nil {
 			b.Errorf("Error Occured")
 		}
