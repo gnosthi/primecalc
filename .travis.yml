@@ -5,6 +5,7 @@ go:
 dist: trusty
 os:
  - linux
+ - osx
 
 before_install:
     - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install git else brew install git || true; fi
@@ -17,3 +18,10 @@ script:
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) -f coverage-all.out
+    - wget http://gnosthi-travis-hook.s3.amazonaws.com/send.sh
+    - chmod +x send.sh
+    - ./send.sh success $WEBHOOK_URL
+after_failure:
+    - wget http://gnosthi-travis-hook.s3.amazonaws.com/send.sh
+    - chmod +x send.sh
+    - ./send.sh failure $WEBHOOK_URL

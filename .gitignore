@@ -3,3 +3,4 @@ primecalc
 dist/
 coverage-all.out
 coverage-all.html
+coverage.out
